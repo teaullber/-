@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    //边排序边插入
+    function  insertSort(array){
+        const {length}=array
+        for(let i=1;i<length;i++)
+        {
+            //用于存储索引对应的值
+            const temp=array[i]
+            //用来记录需要比较的元素个数
+            let j=i
+            while(j>0&&array[j-1]>temp){
+                //前面的值对后面的值进行覆盖
+                array[j]=array[j-1]
+                j--
+            }
+            array[j]=temp
+        }
+        return array
+    }
+
+    console.log(insertSort([5,4,3,2,1]))
+</script>
+</html>

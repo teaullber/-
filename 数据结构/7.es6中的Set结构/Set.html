@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    const a=new Set([1,2,3])
+    const b=new Set([2,3,4])
+
+    //集合取并集
+    const c=new Set([...a,...b])
+    //集合取交集
+    const d=new Set([...a].filter(item=>{
+        return b.has(item)
+    }))
+    //集合取差集(a对b的差集 )
+    const e=new Set([...a].filter(item=>{
+        return !b.has(item)
+    }))
+    console.log(e)
+</script>
+</html>

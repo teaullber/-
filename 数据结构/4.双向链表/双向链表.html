@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //节点类
+    class Node {
+        constructor(data) {
+            this.data = data
+            this.next = null
+        }
+    }
+
+    class LinkedList {
+        constructor() {
+            //记录节点数量
+            this.count = 0
+            //节点头
+            this.head = null
+        }
+
+        push(data) {
+            //生成新节点
+            const node = new Node(data)
+            console.log(node)
+            if (this.head === null) {
+                this.head = node
+            } else {
+                let current = this.head
+                //这一步用来寻找尾节点
+                while (current.next !== null) {
+                    current = current.next
+                }
+                current.next = node
+            }
+            this.count++
+        }
+
+        //删除指定索引位置的节点 并且返回删除的节点
+        removeAt(index) {
+            //判断index的合法性
+            if (index >= 0 && index < this.count) {
+                if (index === 0) {
+                    let mid = this.head
+                    this.head = this.head.next
+                    this.count--
+                    return mid
+                } else {
+                    //way 1
+                    // let previous
+                    // let current = this.head
+                    // for (let i = 0; i < index; i++) {
+                    //     previous = current
+                    //     current = current.next
+                    // }
+                    // previous.next = current.next
+                    // this.count--
+                    // return current
+
+                    //way 2
+                    let previous = this.getNodeAt(index - 1)
+                    let current = previous.next
+                    previous.next = current.next
+                    this.count--
+                    return current
+                }
+            }
+        }
+
+        //根据索引获取当前索引的node
+        getNodeAt(index) {
+            if (index >= 0 && index < this.count) {
+                let node = this.head
+                for (let i = 0; i < index; i++) {
+                    node = node.next
+                }
+                return node
+            }
+        }
+        //判断两个值是否相等
+        equalFn(a,b){
+            return JSON.stringify(a)===JSON.stringify(b)
+            //imumutable库用来判断
+        }
+        //根据数值获取索引
+        indexOf(element){
+            let current=this.head
+            for(let i=0;i<this.count;i++){
+                if(this.equalFn(element,current.data)){
+                    return i
+                }
+                current=current.next
+            }
+            return -1
+        }
+        //根据数值来删除链表中的元素 并且返回删除节点
+        remove(element){
+            const index=this.indexOf(element)
+            return this.removeAt(index)
+        }
+        //任意位置插入索引
+        insert(element,index){
+            //注意这里的判断条件
+            if(index>=0&&index<=this.count){
+                //创建新的节点
+                const node=new Node(element)
+                if(index===0){
+                    node.next=this.head
+                    this.head=node
+                }else{
+                    const previous=this.getNodeAt(index-1)
+                    const current=this.getNodeAt(index)
+                    previous.next=node
+                    node.next=current
+                }
+                this.count++
+                return node
+            }
+            return false
+        }
+        isEmpty(){
+            return this.size()===0
+        }
+        //获取链表长度
+        size(){
+            return this.count
+        }
+        getHead(){
+            return this.head
+        }
+    }
+</script>
+<script>
+    class DoublyNode extends Node{
+        constructor(data) {
+            super(data);
+            this.prev=null
+        }
+    }
+    class DoublyLinkedList extends LinkedList{
+        constructor() {
+            super();
+            this.tail=null
+        }
+        push(element){
+            const node=new DoublyNode(element)
+            if(this.head===null){
+                this.head=node
+                this.tail=node
+            }else{
+                this.tail.next=node
+                node.prev=this.tail
+                this.tail=node
+            }
+            this.count++
+        }
+        insert(element, index) {
+            if(index>=0&&index<=this.count){
+                const node =new DoublyNode(element)
+                if(index===0){
+                    if(this.head===null){
+                        this.head=node
+                        this.tail=node
+                    }else{
+                        node.next=this.head
+                        this.head.prev=node
+                        this.head=node
+                    }
+                }else if(index ===this.count){
+                     this.tail.next=node
+                    node.prev=this.tail
+                    this.tail=node
+                }else{
+                    const previous=super.getNodeAt(index-1)
+                    const current=previous.next
+                    node.prev=previous
+                    node.next=current
+                    previous.next=node
+                    current.prev=node
+                }
+                this.count++
+                return true
+            }
+            return false
+        }
+        removeAt(index){
+            if(index>=0&&index<this.count){
+                //删除链头
+                if(index===0){
+                    this.head=this.head.next
+                    if(this.count===1){
+                        this.tail=null
+                    }else{
+                        this.head.prev=null
+                    }
+                }else if(index===this.count-1){
+                    this.tail.prev=this.tail
+                    this.tail.next=null
+                    //如果this.count===0 这里不再需要把表头值设为空
+                }else{
+                    const previous=super.getNodeAt(index-1)
+                    const current=previous.next
+                    previous.next=current.next
+                    current.next.prev=previous
+                }
+                this.count--
+            }
+        }
+    }
+    let list=new DoublyLinkedList()
+</script>
+</body>
+
+</html>

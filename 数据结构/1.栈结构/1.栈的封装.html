@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //封装栈类
+    function Stack() {
+        //栈中的属性
+        this.items = []
+        //栈相关的操作
+        //1.将元素压入栈
+        Stack.prototype.push = function (ele) {
+            this.items.push(ele)
+        }
+        //2.从栈中取出元素
+        Stack.prototype.pop = function () {
+            return this.items.pop()
+        }
+        //3.查看栈顶元素
+        Stack.prototype.peek = function () {
+            return this.items[this.items.length - 1]
+        }
+        //4.判断栈是否为空
+        Stack.prototype.isEmpty = function () {
+            return this.items.length === 0
+        }
+        //5.获取栈中的元素个数
+        Stack.prototype.size = function () {
+            return this.items.length
+        }
+        //6.toString方法
+        Stack.prototype.toString = function () {
+            let result = ''
+            for (let i = 0; i < this.items.length; i++) {
+                result += this.items[i] + ' '
+            }
+            return result
+        }
+    }
+    //十进制转换为二进制
+    function dec2bin(decNumber) {
+        let stack = new Stack()
+        while (decNumber > 0) {
+            stack.push(decNumber % 2)
+            decNumber = Math.floor(decNumber / 2)
+        }
+        let binaryString=''
+        while(!stack.isEmpty()){
+            binaryString+=stack.pop()
+        }
+        return binaryString
+    }
+    console.log(dec2bin(101));
+</script>
+
+</html>

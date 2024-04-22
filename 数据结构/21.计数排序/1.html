@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let answer=[]
+    //分布式的排序  索引当作储存值
+    function countSort(array){
+        const {length}=array
+        if(length<2) {
+            return false
+        }
+        const maxValue=Math.max(...array)
+        const newArr=new Array(maxValue+1)
+        array.forEach(item=>{
+            if(!newArr[item]){
+                newArr[item]=0
+            }
+            newArr[item]++
+        })
+        return newArr
+    }
+
+    countSort([5,7,5,4,9,1]).forEach((item,index)=>{
+        while(item--){
+            answer.push(index)
+        }
+    })
+    console.log(answer)
+</script>
+</html>

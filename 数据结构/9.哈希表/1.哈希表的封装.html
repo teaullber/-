@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class HashTable{
+        constructor(){
+            this.tables={}
+        }
+        //把key值转换为字符串
+        toString(item){
+             if(item===null){
+                return 'NULL'
+             }else if(item===undefined){
+                return 'UNDEFINED'
+             }else if(typeof item ==='string' ||item instanceof String){
+                return item 
+             }else{
+                return JSON.stringify(item)
+             }
+        }
+        hashCode(key){
+            if(typeof key ==='number'){
+                return key
+            }else{
+                const tableKey=this.toString(key)
+                let hash=0
+                for(let i=0;i<tableKey.length;i++){
+                    hash+=tableKey.charCodeAt(i)
+                }
+                return hash%37
+            }
+        }
+        //解决哈希冲突
+        hashCode2(key){
+            const tableKey=this.toString(key)
+            let hash=5381
+            for(let i=0;i<tableKey.length;i++){
+                hash=(hash*33)+tableKey.charCodeAt(i)
+            }
+            return hash%1013
+        }
+        set(key,value){
+            if(key!=null&&value!=null){    
+                const position=this.hashCode(key)
+                this.tables[position]=new ValuePair(key,value)
+                return true
+            }
+            return false
+        }
+        get(key){
+            const valuePair =this.tables[this.hashCode(key)]
+            return valuePair==null?"NULL":valuePair.value
+        }
+        remove(key){
+            const hash= this.hashCode(key)
+            const valuePair=this.tables[hash]
+            if(valuePair!=null){
+                delete this.tables[hash]
+                return true
+            }
+            return false
+        }
+    }
+    class ValuePair{
+        constructor(key,value){
+            this.key=key
+            this.value=value
+        }
+    }
+    let mymap=new HashTable()
+</script>
+</html>

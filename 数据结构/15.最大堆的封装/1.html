@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class minHeap {
+        heap = []
+
+        //获取某个节点的左侧节点
+        getLeftIndex(index) {
+            return 2 * index + 1
+        }
+
+        //获取某个节点的右侧节点
+        getRightIndex(index) {
+            return 2 * index + 2
+        }
+
+        //获取某个节点的父节点
+        getParentIndex(index) {
+            return Math.floor((index - 1) / 2)
+        }
+
+        //二叉堆的插入
+        insert(value) {
+            if (value) {
+                this.heap.push(value)
+                let index = this.heap.length - 1
+                this.shiftUp(index)
+            } else {
+                return false
+            }
+
+        }
+
+        shiftUp(index) {
+            let parentIndex = this.getParentIndex(index)
+            while (index > 0 && this.heap[index] < this.heap[parentIndex]) {
+                this.swap(this.heap, index, parentIndex)
+                index = parentIndex
+                parentIndex = this.getParentIndex(index)
+            }
+        }
+
+        //交换两个节点的值
+        swap(heap, a, b) {
+            const temp = heap[a]
+            heap[a] = heap[b]
+            heap[b] = temp
+        }
+
+        //删除最小的节点
+        extract() {
+            if (this.heap.length === 0) {
+                return
+            }
+            if (this.heap.length === 1) {
+                return this.heap.shift()
+            }
+            const removed = this.heap[0]
+            //将最后一个元素放在最小堆的根部
+            this.heap[0] = this.heap.pop()
+            this.shiftDown(0)
+            return removed
+        }
+
+        shiftDown(index) {
+            let current = index
+            let left = this.getLeftIndex(current)
+            let right = this.getRightIndex(current)
+            let size = this.heap.length
+            if (left < size && this.heap[current] > this.heap[left]) {
+                current = left
+            }
+            if (right < size && this.heap[current] > this.heap[right]) {
+                current = right
+            }
+            if (current !== index) {
+                this.swap(this.heap, current, index)
+                this.shiftDown(current)
+            }
+        }
+    }
+    class maxHeap extends minHeap{
+        constructor() {
+            super();
+        }
+        shiftUp(index) {
+            let parentIndex = this.getParentIndex(index)
+            while (index > 0 && this.heap[index] > this.heap[parentIndex]) {
+                this.swap(this.heap, index, parentIndex)
+                index = parentIndex
+                parentIndex = this.getParentIndex(index)
+            }
+        }
+        shiftDown(index) {
+            let current = index
+            let left = this.getLeftIndex(current)
+            let right = this.getRightIndex(current)
+            let size = this.heap.length
+            if (left < size && this.heap[current] < this.heap[left]) {
+                current = left
+            }
+            if (right < size && this.heap[current] < this.heap[right]) {
+                current = right
+            }
+            if (current !== index) {
+                this.swap(this.heap, current, index)
+                this.shiftDown(current)
+            }
+        }
+
+    }
+    let heap=new maxHeap()
+    heap.insert(1)
+    heap.insert(3)
+    heap.insert(2)
+    heap.insert(4)
+    heap.insert(5)
+</script>
+</html>

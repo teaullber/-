@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    const arr = [35, 2, 26, 2, 5, 8, 34, 1, 56, 99, 33]
+
+    function radixSort(array) {
+        let base = 10
+        let divider = 1
+        let maxVal=Math.max(...array)
+        while (divider<=maxVal) {
+            //创建小桶  构建二维数组
+            const buckets = [...Array(10)].map(()=>[])
+            for(let val of arr){
+                buckets[Math.floor(val/divider)%base].push(val)
+            }
+            array=[].concat(...buckets)
+            divider *= base
+        }
+        return array
+    }
+
+    console.log(radixSort(arr))
+</script>
+</html>

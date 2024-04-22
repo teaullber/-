@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function LCS(str1, str2) {
+        const l1 = str1.length
+        const l2 = str2.length
+        let dp = new Array(l1 + 1).fill(0).map(()=>new Array(l2+1).fill(0))
+        for (let i = 1; i <= l1; i++) {
+            for (let j = 1; j <= l2; j++) {
+                if(str1[i-1]===str2[j-1]){
+                    dp[i][j]=dp[i-1][j-1]+1
+                }else{
+                    dp[i][j]=Math.max(dp[i][j-1],dp[i-1][j])
+                }
+            }
+        }
+        console.log(dp[l1][l2])
+        console.log(printLCS(dp,str1,str2,l1,l2))
+    }
+
+    LCS('acsdf', 'asf')
+    function  printLCS(dp,str1,str2,i,j){
+        const result=[]
+        while(i>0&&j>0){
+            if(str1[i-1]===str2[j-1]){
+                result.unshift(str1[i-1])
+                i--
+                j--
+            }else if(dp[i-1][j]>dp[i][j-1]){
+                i--
+            }else{
+                j--
+            }
+        }
+        return result
+    }
+</script>
+</html>

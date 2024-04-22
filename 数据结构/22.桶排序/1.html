@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function bucketSort(array, bucketSize = 3) {
+        const {length} = array
+        if (length < 2) {
+            return false
+        }
+        //创建几个小桶
+        const buckets = createBuckets(array, bucketSize)
+        //通过插入排序将小桶进行排序
+        return sortBuckets(buckets)
+    }
+
+    function createBuckets(array, bucketSize) {
+        let minValue = Math.min(...array)
+        let maxValue = Math.max(...array)
+        //计算小桶的数量
+        const bucketsCount = Math.floor((maxValue - minValue) / bucketSize) + 1
+        const buckets = []
+        for (let i = 0; i < bucketsCount; i++) {
+            buckets[i] = []
+        }
+
+        for (let i = 0; i < array.length; i++) {
+            const index = Math.floor((array[i] - minValue) / bucketSize)
+            buckets[index].push(array[i])
+        }
+        console.log(buckets)
+        return buckets
+    }
+
+    function sortBuckets(buckets) {
+        const newArr=[]
+        //这里使用插入排序进行桶内排序
+        buckets.map((item)=>{
+            item=insertSort(item)
+            newArr.push(...item)
+        })
+        console.log(newArr)
+        return newArr
+    }
+
+    //插入排序
+    function insertSort(array) {
+        const {length} = array
+        for (let i = 1; i < length; i++) {
+            const temp = array[i]
+            let j = i
+            while (j > 0 && array[j-1] > temp) {
+                array[j] = array[j - 1]
+                j--
+            }
+                array[j]=temp
+        }
+        return array
+    }
+
+    bucketSort([5, 4, 3, 2, 6, 1, 7, 10, 9, 8])
+</script>
+</html>

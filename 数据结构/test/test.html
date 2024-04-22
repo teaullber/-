@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const map =new Map()
+    map.set('a',2)
+    map.set('b',1)
+    map.set('c',3)
+    map.set('d',5)
+    const a=[...map.entries()]
+    console.log(a)
+    a.sort((a,b)=>b[1]-a[1])
+    console.log(a)
+</script>
+</html>

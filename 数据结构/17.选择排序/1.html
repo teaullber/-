@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+
+<script>
+//选择最小的放在第一位  次小的放在第二位......以此类推
+function  selectionSort(array){
+    const {length}=array
+    let indexMin
+    for(let i=0;i<length-1;i++)
+    {
+        indexMin=i
+        for(let j=i+1;j<length;j++)
+        {
+            if(array[indexMin]>array[j]){
+                indexMin=j
+            }
+        }
+        if(indexMin!==i){
+            swap(array,indexMin,i)
+        }
+    }
+    return array
+}
+function swap(array, j,k) {
+    const temp = array[k]
+    array[k] = array[j]
+    array[j] = temp
+}
+
+console.log(selectionSort([5,4,3,2,1]))
+</script>
+</html>

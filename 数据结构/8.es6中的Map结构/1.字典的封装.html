@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Dictionary{
+        constructor(a){
+            this.tables=a
+        }
+        //把key值转换为字符串
+        toString(item){
+             if(item===null){
+                return 'NULL'
+             }else if(item===undefined){
+                return 'UNDEFINED'
+             }else if(typeof item ==='string' ||item instanceof String){
+                return item 
+             }else{
+                return JSON.stringify(item)
+             }
+        }
+        hasKey(key){
+            //注意这里是！=  不是！==      undefined==null(true)  undefined===null(false) 
+            return this.tables[this.toString(key)]!=null
+        }
+        set(key,value){
+            if(key!=null&&value!=null){
+                const tableKey=this.toString(key)
+                //键值对  值里面存储原来的键和值
+                this.tables[tableKey]=new ValuePair(key,value)
+                return true
+            }
+            return false
+        }
+        //获取时要判断是否存在
+        get(key){
+            const valuePair=this.tables[this.toString(key)]
+            return valuePair==null?undefined:valuePair.value
+        }
+        //删除前要判断是否存在
+        remove(key){
+            if(this.hasKey(key)){
+                delete this.tables[this.toString(key)]
+            }
+            return false
+        }
+    }
+    class ValuePair{
+        constructor(key,value){
+            this.key=key
+            this.value=value
+        }
+    }
+    let mymap=new Dictionary({'x':1})
+</script>
+</html>
